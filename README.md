@@ -7,6 +7,7 @@ This repository contains following files:
 
 - `detect_dual.py`       : This script is used for detection of image/video by passing arguments.
 - `s15.ipynb`            : This script is used for tracking training/validation of dataset.
+- `inference.ipynb`      : This script is used for testing of image samples.
 - `train_dual.py`        : This script is used for training of dataset by passing arguments.
 - `val_dual.py`          : This script is used for validation of dataset by passing arguments.
 - `yolov9`               : This code folder is cloned from https://github.com/WongKinYiu/yolov9.git.
