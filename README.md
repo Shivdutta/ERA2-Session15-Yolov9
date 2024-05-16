@@ -28,6 +28,8 @@ This repository contains following files:
 - Training command:
 - !python train_dual.py --workers 8 --batch 4  --img 640 --epochs 50 --data /home/ubuntu/s15a/yolov9/data/vehicle_dataset/data.yaml --weights /home/ubuntu/s15a/yolov9/weights/yolov9-e.pt --cfg /home/ubuntu/s15a/yolov9/weights/yolov9-e.yaml --device 0 --hyp /home/ubuntu/s15a/yolov9/data/hyps/hyp.scratch-high.yaml
 
+![image-5](logs1.png)
+
 #### Description Parameters:
         --epochs 50: This argument specifies the number of epochs for training. An epoch is one complete pass through the entire training dataset. Here, training will run for 50 epochs.
 
@@ -2683,6 +2685,7 @@ yolov9-e summary: 839 layers, 68555524 parameters, 0 gradients, 240.7 GFLOPs
 Results saved to runs/train/exp
 
 ```
+![image-6](logs2.png)
 
 ## Gradio App
 
