@@ -18,10 +18,6 @@ This repository contains following files:
             - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-e.yaml
             - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-c.yaml
 
-![AWS EC2](Img-AWS.png)
-
-## From class notes:
-- To Do
 
 ## Training Steps:
 - Download the custom data https://www.kaggle.com/datasets/nadinpethiyagoda/vehicle-dataset-for-yolo
