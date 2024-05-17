@@ -13,10 +13,10 @@ This repository contains following files:
 - `yolov9`               : This code folder is cloned from https://github.com/WongKinYiu/yolov9.git.
 - `data\vehicle_dataset` : This dataset folder is cloned from https://www.kaggle.com/datasets/nadinpethiyagoda/vehicle-dataset-for-yolo
 - `yolo\weights`         : The base model is downloaded from             
-            - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-c.pt
-            - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-e.pt
-            - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-e.yaml
-            - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-c.yaml
+  - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-c.pt
+  - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-e.pt
+  - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-e.yaml
+  - https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-c.yaml
 
 
 ## Training Steps:
@@ -67,6 +67,59 @@ This repository contains following files:
 ## Note:
   - If you get this error: AttributeError: 'list' object has no attribute 'device'
   - Then open utils/general.py file and go to line no 903 and write this prediction = prediction[0][1]
+
+
+## Some notes form class:
+- YOLOv9, a major breakthrough in object detection technology, has been developed by Chien-Yao Wang and his team. This latest version   incorporates innovative techniques like Programmable Gradient Information (PGI) and Generalized Efficient Layer Aggregation Network (GELAN) to address issues related to information loss and computational efficiency.
+
+- Existing solutions like reversible architectures, masked modeling, and deep supervision attempt to mitigate the information bottleneck, but they have various drawbacks during training and inference, and are less effective for smaller models essential for real-time object detectors like those in the YOLO series.
+
+- To overcome these challenges, YOLOv9 introduces PGI and GELAN to directly tackle the information bottleneck, enhancing both the accuracy and efficiency of object detection.
+
+- This approach comprises four main components: the Information Bottleneck Principle, Reversible Functions, Programmable Gradient Information (PGI), and the Generalized Efficient Layer Aggregation Network (GELAN).
+
+- Information Bottleneck Principle
+- The Information Bottleneck Principle emphasizes the occurrence of information loss as data undergoes transformations within a neural network. The equation associated with the Information Bottleneck illustrates the reduction of mutual information between the original and transformed data as it traverses through the layers of the deep network.
+
+![Alt text](image.png)
+
+- In this equation, I denote mutual information, while f and g are transformation functions with parameters θ and ϕ, respectively. As data X passes through layers (fθ and gϕ) of a deep neural network, it loses vital information needed for accurate predictions. This loss can lead to unreliable gradients and poor model convergence. A common solution is to increase the model’s size to enhance its data transformation capacity, thereby retaining more information. However, this approach doesn’t address the issue of unreliable gradients in very deep networks. The following section explores how reversible functions offer a more effective solution.
+
+- Reversible Functions
+- The theoretical solution to the Information Bottleneck problem is the use of reversible functions. In neural networks, reversible functions ensure no information is lost during data transformation. These functions enable the inversion of data transformations, allowing the original input data to be perfectly reconstructed from the network’s outputs.
+
+![Alt text](image-1.png)
+
+- In the above equation, r and v represent the forward and reverse transformations, with ψ and ζ as their parameters, respectively. Utilizing reversible functions enables networks to maintain the entire input information through all the layers, leading to more reliable gradient calculations for model updates. Despite their benefits, reversible functions challenge the traditional understanding of deep networks, especially when addressing complex problems with models that are not inherently deep.
+
+![Alt text](image-2.png)
+
+- By using the reversible function, mutual information between the input and output is preserved. Here, we can observe that mutual information I preserves the original input X while it passes through the layers using the transformation function r and its inverse v.
+
+- Programmable Gradient Information (PGI)
+- Based on this analysis, a new deep neural network training method is needed that can produce reliable gradients for model updates and is also suitable for shallow and lightweight neural networks. Programmable Gradient Information (PGI) addresses this need with a solution that includes a main branch for inference, an auxiliary reversible branch for reliable gradient calculation, and multi-level auxiliary information to effectively handle deep supervision issues without adding extra inference costs.
+
+![Alt text](image-3.png)
+
+- To understand Programmable Gradient Information (PGI) in the YOLOv9 framework, we need to examine its intricate design, which aims to enhance model training and efficiency. PGI incorporates an auxiliary supervision node to tackle the information bottleneck in deep neural networks, focusing on the precise and efficient backpropagation of gradients. PGI is developed through three components, each playing a distinct yet interconnected role within the model’s architecture.
+
+- Main Branch:
+The main branch is streamlined for inference, keeping the model efficient during this critical phase. It is designed to function without auxiliary components during inference, maintaining high performance without additional computational overhead.
+
+- Auxiliary Reversible Branch:
+This branch ensures reliable gradient generation and precise parameter updates. Utilizing a reversible architecture, it mitigates information loss in deep network layers and preserves complete data for learning. The branch is designed to be seamlessly integrated or removed, ensuring model depth and complexity do not hinder inference speed.
+
+- Multi-Level Auxiliary Information:
+This method employs specialized networks to combine gradient information across the model’s layers. It addresses the issue of information loss in deep supervision models, ensuring comprehensive data understanding. This technique enhances predictions for objects of varying sizes.
+
+- Generalized Efficient Layer Aggregation Network (GELAN)
+- The introduction of Programmable Gradient Information (PGI) in YOLOv9 highlighted the need for a more refined architecture, leading to the development of the Generalized Efficient Layer Aggregation Network (GELAN). GELAN is specifically designed to complement the PGI framework, improving the model’s capacity to process and learn from data efficiently. While PGI tackles the challenge of preserving essential information in deep neural networks, GELAN enhances this by offering a flexible and efficient structure that supports various computational blocks.
+
+![Alt text](image-4.png)
+
+- The Generalized Efficient Layer Aggregation Network (GELAN) in YOLOv9 integrates the optimal elements of CSPNet’s gradient path planning and ELAN’s speed optimizations. GELAN is a flexible architecture that combines these strengths, enhancing the YOLO family’s hallmark real-time inference ability. It is a lightweight framework designed to ensure fast inference times while maintaining high accuracy, broadening the utility of computational blocks.
+- 
+
 
 
 ## Training Details
@@ -2685,6 +2738,7 @@ yolov9-e summary: 839 layers, 68555524 parameters, 0 gradients, 240.7 GFLOPs
 Results saved to runs/train/exp
 
 ```
+
 ![image-6](logs2.png)
 
 ## Gradio App
